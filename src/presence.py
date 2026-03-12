@@ -32,10 +32,10 @@ class PresenceDetector:
     
     def __init__(
         self,
-        lookback_minutes: int = 5,  # 回看5分钟
+        lookback_minutes: int = 15,  # 回看15分钟
         presence_threshold: float = 0.3,  # >30%检测到人=在场
         left_threshold: float = 0.1,  # <10%检测到人=离开
-        cooldown_minutes: int = 5,  # 事件之间至少间隔5分钟
+        cooldown_minutes: int = 10,  # 事件之间至少间隔10分钟
     ):
         self.lookback_minutes = lookback_minutes
         self.presence_threshold = presence_threshold

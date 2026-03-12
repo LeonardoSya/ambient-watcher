@@ -42,9 +42,9 @@
     "novelty_threshold": 0.5
   },
   "presence": {
-    "lookback_minutes": 5,
+    "lookback_minutes": 15,
     "presence_threshold": 0.3,
     "left_threshold": 0.1,
-    "cooldown_minutes": 5
+    "cooldown_minutes": 10
   }
 }
