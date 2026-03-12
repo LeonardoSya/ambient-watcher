@@ -1,0 +1,44 @@
+{
+  "vision": {
+    "enabled": true,
+    "capture_interval": 5,
+    "device_name": "0",
+    "width": 1280,
+    "height": 720,
+    "framerate": 30,
+    "jpeg_quality": 5
+  },
+  "hearing": {
+    "enabled": true,
+    "sample_rate": 44100,
+    "chunk_duration": 1,
+    "silence_threshold": 0.01,
+    "device_keyword": "MacBook"
+  },
+  "memory": {
+    "duration_minutes": 15,
+    "max_events": 1000,
+    "data_dir": "data",
+    "auto_keyframe_threshold": 4
+  },
+  "watcher": {
+    "log_level": "INFO",
+    "analysis_interval": 30,
+    "anomaly_check_interval": 10,
+    "continuous_vision_interval": 120
+  },
+  "analyzer": {
+    "anomaly_cooldown": 60,
+    "scene_change_threshold": 0.3,
+    "volume_spike_threshold": 0.1
+  },
+  "notifier": {
+    "macos_notification": true,
+    "sound_on_alert": true,
+    "min_interval": 5
+  },
+  "learner": {
+    "baseline_window": 50,
+    "novelty_threshold": 0.5
+  }
+}

@@ -1,0 +1,6 @@
+# Ambient Watcher 依赖
+opencv-python>=4.8.0
+pyaudio>=0.2.14
+numpy>=1.24.0
+requests>=2.31.0
+pyobjc-framework-AVFoundation>=10.0

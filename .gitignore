@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Runtime data (regenerated on startup)
+data/observations.json
+data/keyframes.json
+data/learner.json
+data/*.wav
+data/*.jpg
+data/*.png
+
+# Logs
+*.log
+
+# Keep data directory structure
+!data/.gitkeep
