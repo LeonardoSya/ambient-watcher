@@ -18,6 +18,7 @@ from .hearing import HearingAnalyzer
 from .memory import Memory, Observation
 from .analyzer import Analyzer
 from .notifier import Notifier
+from .presence import PresenceDetector
 from .learner import Learner
 
 logger = logging.getLogger(__name__)
@@ -57,6 +58,14 @@ class AmbientWatcher:
             memory=self.memory,
             notifier=self.notifier,
             learner=self.learner,
+        )
+        
+        # 在场检测器
+        self.presence_detector = PresenceDetector(
+            lookback_minutes=self.config.get('presence', {}).get('lookback_minutes', 5),
+            presence_threshold=self.config.get('presence', {}).get('presence_threshold', 0.3),
+            left_threshold=self.config.get('presence', {}).get('left_threshold', 0.1),
+            cooldown_minutes=self.config.get('presence', {}).get('cooldown_minutes', 5),
         )
         # 状态
         self.running = False
@@ -397,6 +406,28 @@ class AmbientWatcher:
                 importance=1,
                 tags=['status', 'report'],
             )
+            
+            # 在场检测 - 检测离开/返回事件
+            try:
+                all_obs = self.memory.get_all()
+                if all_obs:
+                    event = self.presence_detector.detect_event(all_obs)
+                    if event:
+                        logger.info(f"🎯 Presence Event: {event.event_type} - {event.details}")
+                        # 记录事件到记忆
+                        self.memory.add(
+                            modality='vision',
+                            content=f"[在场事件] {event.event_type}: {event.details}",
+                            importance=3,
+                            tags=['presence', 'event', event.event_type],
+                        )
+                        # 发送通知
+                        self.notifier.send(
+                            title=f"🟢 回来啦!" if event.event_type == "arrived" else "🔴 离开了",
+                            message=event.details,
+                        )
+            except Exception as e:
+                logger.error(f"在场检测错误: {e}")
 
             # Check for volume anomalies (legacy, kept for logging)
             with self._volume_lock:
